@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 
 const App = () => {
+  const BASE_URL = 'https://swapi.dev/api/people/'
   // Try to think through what state you'll need for this app before starting. Then build out
   // the state properties here.
+  const [ character, setCharacter ] = useState('')
 
   // Fetch characters from the API in an effect hook. Remember, anytime you have a 
   // side effect in a component, you want to think about which state and/or props it should
   // sync up with, if any.
+  useEffect(() => {
+    axios.get(BASE_URL)
+    .then(res => {
+      console.log(res.data);  
+      setCharacter(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }, [])
 
   return (
     <div className="App">
